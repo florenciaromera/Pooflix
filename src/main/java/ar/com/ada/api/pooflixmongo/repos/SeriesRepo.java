@@ -15,4 +15,7 @@ public interface SeriesRepo extends MongoRepository<Series, ObjectId> {
 
     @Query("{ 'title' : ?0 }")
     Optional<Series> findSeriesByTitle(String title);
+
+    @Query(value = "{ 'actress._id' : ?0 }", fields = "{'_id' : 1, 'title': 1, 'actress' : 1 }")
+    List<Series> findSeriesByActress_id(ObjectId _id);
 }

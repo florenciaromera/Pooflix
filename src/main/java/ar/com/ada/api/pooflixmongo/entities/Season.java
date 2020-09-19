@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 public class Season {
     private ObjectId _id;
     private String title;
+    private Integer number;
     private Date releaseDate;
     private List<Episode> episodes = new ArrayList<>();
     private List<Webisode> webisodes = new ArrayList<>();
@@ -49,5 +50,21 @@ public class Season {
 
     public void setWebisodes(List<Webisode> webisodes) {
         this.webisodes = webisodes;
-    }    
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
 }

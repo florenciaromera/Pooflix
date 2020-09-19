@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 public class Webisode {
     private ObjectId _id;
     private String title;
+    private Integer number;
     private Date releaseDate;
     private String url;
     private Integer director;
@@ -58,6 +59,14 @@ public class Webisode {
 
     public void setActors(List<Integer> actors) {
         this.actors = actors;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
     
 }
