@@ -9,19 +9,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Series extends MediaContent {
     private ObjectId _id;
     private String title;
-    private Date releaseDate;
+    private String releaseDate;
     private boolean awardWinner;
-    private String genre;
+    private List<String> genres = new ArrayList<>();
     private List<Season> seasons = new ArrayList<>();
 
     public Series(){
 
     }
 
-    public Series(String title, Date releaseDate, boolean awardWinner, String genre){
-
+    public Series(String title, String releaseDate, boolean awardWinner, List<String> genres){
+        this.title = title;
+        this.releaseDate = releaseDate;
+        this.awardWinner = awardWinner;
+        this.genres = genres;
     }
-    
+
     public ObjectId get_id() {
         return _id;
     }
@@ -38,11 +41,11 @@ public class Series extends MediaContent {
         this.title = title;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -54,12 +57,12 @@ public class Series extends MediaContent {
         this.awardWinner = awardWinner;
     }
 
-    public String getGenre() {
-        return genre;
+    public List<String> getGenres() {
+        return genres;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
     }
 
     public List<Season> getSeasons() {
@@ -68,5 +71,5 @@ public class Series extends MediaContent {
 
     public void setSeasons(List<Season> seasons) {
         this.seasons = seasons;
-    }
+    }    
 }

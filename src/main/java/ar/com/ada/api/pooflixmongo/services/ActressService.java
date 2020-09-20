@@ -46,8 +46,12 @@ public class ActressService {
         return actressOp.isPresent() ? actressOp : Optional.empty();
     }
 
-    public synchronized void addOrEditActressFromListener(ObjectId _id, List<String> names){
-        List<Optional<Actress>> opList = names.stream().map(s -> createActress(s)).collect(Collectors.toList());
+    public void addOrEditActressFromListener(ObjectId _id, List<String> names){
+        List<Optional<Actress>> opList = new ArrayList<>();
+        synchronized (this) {
+            opList = names.stream().map(s -> createActress(s)).collect(Collectors.toList());
+        }
+        List<Actress> actressList = new ArrayList<>();
         for(Optional<Actress> opActress : opList){
             Actress a = opActress.get();
             List<ObjectId> objectId = a.getMovies();
@@ -55,8 +59,9 @@ public class ActressService {
                 objectId.add(_id);
             }
             a.setMovies(objectId);
-            aR.save(a);
+            actressList.add(a);    
         }
+        aR.saveAll(actressList);
     }
 
 	public Optional<ActressMoviesListResponse> getActressMovieListByName(String fullName) {

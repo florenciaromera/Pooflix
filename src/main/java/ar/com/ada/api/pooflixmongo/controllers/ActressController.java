@@ -31,11 +31,11 @@ public class ActressController {
      */
 
     @Autowired
-    ActressService aS;
+    ActressService actressService;
 
     @PostMapping("/api/actresses")
     public ResponseEntity<GenericResponse> createActress(@RequestBody ActressCreationRequest aCR) {
-        Optional<Actress> actressCreated = aS.createActress(aCR.name, aCR.birthDate, aCR.nationality);
+        Optional<Actress> actressCreated = actressService.createActress(aCR.name, aCR.birthDate, aCR.nationality);
         return actressCreated.isPresent()
                 ? ResponseEntity.ok(new GenericResponse(actressCreated.get().get_id(), "SUCCESS", true))
                 : ResponseEntity.badRequest().build();
@@ -51,7 +51,7 @@ public class ActressController {
 
     @GetMapping("/api/actresses/{fullName}/movies")
     public ResponseEntity<ActressMoviesListResponse> getActressMovieListByName(@PathVariable String fullName) {
-        Optional<ActressMoviesListResponse> actressMLROp = aS.getActressMovieListByName(fullName);
+        Optional<ActressMoviesListResponse> actressMLROp = actressService.getActressMovieListByName(fullName);
         return actressMLROp.isPresent() ? ResponseEntity.ok(actressMLROp.get()) : ResponseEntity.badRequest().build();
     }
 }

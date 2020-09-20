@@ -20,21 +20,21 @@ import ar.com.ada.api.pooflixmongo.services.DirectressService;
 @RestController
 public class DirectressController {
     /**
-     * GET api/Directress/{byName}: obtener data de la actriz by name sin movies 
-     * GET api/Directress/{byName}/movies: obtener lista de movies de una actriz 
-     * por nombre sin data ActreesMovieListResponse 
-     * GET api/Directress/{byName}/movies/{genreId}: obtener lista de movies de 
-     * una actriz de un género por su id DirectressMovieByGenreListResponse 
-     * PUT api/Directress/{byId}: actualizar data de la actriz updateDirectressRequest 
+     * GET api/Directress/{byName}: obtener data de la actriz by name sin movies GET
+     * api/Directress/{byName}/movies: obtener lista de movies de una actriz por
+     * nombre sin data ActreesMovieListResponse GET
+     * api/Directress/{byName}/movies/{genreId}: obtener lista de movies de una
+     * actriz de un género por su id DirectressMovieByGenreListResponse PUT
+     * api/Directress/{byId}: actualizar data de la actriz updateDirectressRequest
      * updateDirectressResponse
      */
 
     @Autowired
-    DirectressService dS;
+    DirectressService directressService;
 
     @PostMapping("/api/directresses")
     public ResponseEntity<GenericResponse> createDirectress(@RequestBody DirectressCreationRequest aCR) {
-        Optional<Directress> directressCreated = dS.createDirectress(aCR.name, aCR.birthDate, aCR.nationality);
+        Optional<Directress> directressCreated = directressService.createDirectress(aCR.name, aCR.birthDate, aCR.nationality);
         return directressCreated.isPresent()
                 ? ResponseEntity.ok(new GenericResponse(directressCreated.get().get_id(), "SUCCESS", true))
                 : ResponseEntity.badRequest().build();
@@ -42,17 +42,19 @@ public class DirectressController {
 
     @GetMapping("/api/directresses/{id}")
     public ResponseEntity<DirectressResponse> getDirectressById(@PathVariable ObjectId id) {
-        Optional<Directress> directressOp = dS.getDirectressById(id);
-        return directressOp.isPresent() ? ResponseEntity.ok(new DirectressResponse(directressOp.get().getName(),
-                directressOp.get().getBirthDate(), directressOp.get().getNationality()))
+        Optional<Directress> directressOp = directressService.getDirectressById(id);
+        return directressOp.isPresent()
+                ? ResponseEntity.ok(new DirectressResponse(directressOp.get().getName(),
+                        directressOp.get().getBirthDate(), directressOp.get().getNationality()))
                 : ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/api/directresses/{fullName}")
     public ResponseEntity<DirectressResponse> getDirectressByName(@PathVariable String fullName) {
-        Optional<Directress> directressOp = dS.getDirectressByName(fullName);
-        return directressOp.isPresent() ? ResponseEntity.ok(new DirectressResponse(directressOp.get().getName(),
-                directressOp.get().getBirthDate(), directressOp.get().getNationality()))
+        Optional<Directress> directressOp = directressService.getDirectressByName(fullName);
+        return directressOp.isPresent()
+                ? ResponseEntity.ok(new DirectressResponse(directressOp.get().getName(),
+                        directressOp.get().getBirthDate(), directressOp.get().getNationality()))
                 : ResponseEntity.badRequest().build();
     }
 }

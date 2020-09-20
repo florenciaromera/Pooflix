@@ -29,11 +29,11 @@ public class GenreController {
      */
 
     @Autowired
-    GenreService gS;
+    GenreService genreService;
 
     @PostMapping("/api/genre")
     public ResponseEntity<GenericResponse> createGenre(@RequestBody GenreCreationRequest gCR) {
-        Optional<Genre> genreCreated = gS.createGenre(gCR.name, gCR.description);
+        Optional<Genre> genreCreated = genreService.createGenre(gCR.name, gCR.description);
         return genreCreated.isPresent()
                 ? ResponseEntity.ok(new GenericResponse(genreCreated.get().get_id(), "SUCCESS", true))
                 : ResponseEntity.badRequest().build();
@@ -41,14 +41,14 @@ public class GenreController {
 
     @GetMapping("/api/genre/{id}")
     public ResponseEntity<GenreResponse> getGenreById(@PathVariable ObjectId id) {
-        Optional<Genre> genreOp = gS.getGenreById(id);
+        Optional<Genre> genreOp = genreService.getGenreById(id);
         return genreOp.isPresent() ? ResponseEntity.ok(new GenreResponse(genreOp.get().getName(),
                 genreOp.get().getDescription())) : ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/api/genre/{name}")
     public ResponseEntity<GenreResponse> getGenreByName(@PathVariable String name) {
-        Optional<Genre> genreOp = gS.getGenreByName(name);
+        Optional<Genre> genreOp = genreService.getGenreByName(name);
         return genreOp.isPresent() ? ResponseEntity.ok(new GenreResponse(genreOp.get().getName(),
                 genreOp.get().getDescription())) : ResponseEntity.badRequest().build();
     }

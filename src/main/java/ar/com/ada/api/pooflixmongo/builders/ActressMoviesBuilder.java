@@ -23,5 +23,5 @@ public class ActressMoviesBuilder {
             movies.add(movieService.getMovieById(m).get());
         }
         return new ActressMoviesListResponse(actress.getName(), movies);
-    }
+    }      
 }

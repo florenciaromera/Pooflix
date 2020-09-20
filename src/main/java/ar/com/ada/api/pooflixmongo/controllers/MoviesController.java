@@ -30,27 +30,27 @@ public class MoviesController {
      */
 
     @Autowired
-    MovieService mS;
+    MovieService movieService;
 
     @PostMapping("/api/movies")
     public ResponseEntity<?> createMovie(@RequestBody MovieCreationRequestList mCR) {
-        System.out.println("cualquiera");
+        System.out.println(new Date().toString());
         for (MovieCreationRequest m : mCR.getM()) {
-            mS.createMovie(m.title, m.releaseDate, m.awardWinner, m.genre, m.director, m.actors);
+            movieService.createMovie(m.title, m.releaseDate, m.awardWinner, m.genre, m.director, m.actors);
         }
         return ResponseEntity.ok("ok");
     }
 
     @GetMapping("/api/movies/{id}")
     public ResponseEntity<MovieResponse> getMovieById(@PathVariable ObjectId id) {
-        Optional<Movie> movieOp = mS.getMovieById(id);
+        Optional<Movie> movieOp = movieService.getMovieById(id);
         return movieOp.isPresent() ? ResponseEntity.ok(new MovieResponse(movieOp.get().getTitle(),
                 movieOp.get().getReleaseDate(), movieOp.get().isAwardWinner())) : ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/api/movies/{title}")
     public ResponseEntity<MovieResponse> getMovieByTitle(@PathVariable String title) {
-        Optional<Movie> movieOp = mS.getMovieByTitle(title);
+        Optional<Movie> movieOp = movieService.getMovieByTitle(title);
         return movieOp.isPresent() ? ResponseEntity.ok(new MovieResponse(movieOp.get().getTitle(),
                 movieOp.get().getReleaseDate(), movieOp.get().isAwardWinner())) : ResponseEntity.badRequest().build();
     }

@@ -31,10 +31,10 @@ public class SeriesService {
         return Optional.of(seriesRepo.findBy_id(_id));
     }
 
-    public Optional<Series> createSeries(String title, Date releaseDate, boolean awardWinner, String genre) {
+    public Optional<Series> createSeries(String title, String releaseDate, boolean awardWinner, List<String> genres) {
         Optional<Series> seriesOp = seriesRepo.findSeriesByTitle(title);
-        return seriesOp.isPresent() ? Optional.of(seriesRepo.save(new Series(title, releaseDate, awardWinner, genre)))
-                : Optional.empty();
+        return !seriesOp.isPresent() ? Optional.of(seriesRepo.save(new Series(title, releaseDate, awardWinner, genres)))
+                : seriesOp;
     }
 
     public Optional<Series> getSeriesById(ObjectId id) {

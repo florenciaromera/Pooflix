@@ -39,8 +39,12 @@ public class GenreService {
         return genreOp.isPresent() ? genreOp : Optional.empty();
     }
 
-    public synchronized void addOrEditGenreFromListener(ObjectId _id, List<String> genres) {
-        List<Optional<Genre>> opList = genres.stream().map(s -> createGenre(s)).collect(Collectors.toList());
+    public void addOrEditGenreFromListener(ObjectId _id, List<String> genres) {
+        List<Optional<Genre>> opList = new ArrayList<>();
+        synchronized (this) {
+            opList = genres.stream().map(s -> createGenre(s)).collect(Collectors.toList());
+        }
+        List<Genre> genresList = new ArrayList<>();
         for (Optional<Genre> opGenre : opList) {
             Genre g = opGenre.get();
             List<ObjectId> objectId = g.getMovies();
@@ -48,7 +52,8 @@ public class GenreService {
                 objectId.add(_id);
             }
             g.setMovies(objectId);
-            gR.save(g);
+            genresList.add(g);
         }
+        gR.saveAll(genresList);
     }
 }

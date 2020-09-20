@@ -1,31 +1,24 @@
 package ar.com.ada.api.pooflixmongo.listeners;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.AfterSaveEvent;
 
 import ar.com.ada.api.pooflixmongo.entities.Movie;
-import ar.com.ada.api.pooflixmongo.services.ActressService;
-import ar.com.ada.api.pooflixmongo.services.DirectressService;
-import ar.com.ada.api.pooflixmongo.services.GenreService;
+import ar.com.ada.api.pooflixmongo.executors.MovieAfterSaveThreadHandler;
 
 public class MovieAfterSaveListener extends AbstractMongoEventListener<Movie> {
     @Autowired
-    GenreService genreService;
-
-    @Autowired
-    DirectressService directressService;
-
-    @Autowired
-    ActressService actressService;
+    MovieAfterSaveThreadHandler movieAfterSaveThreadHandler;
 
     @Override
     public void onAfterSave(AfterSaveEvent<Movie> event) {
         super.onAfterSave(event);
         Movie movie = event.getSource();
+        movieAfterSaveThreadHandler.handle(movie);
 
-        actressService.addOrEditActressFromListener(movie.get_id(), movie.getActresses());
-        directressService.addOrEditDirectressFromListener(movie.get_id(), movie.getDirectress());
-        genreService.addOrEditGenreFromListener(movie.get_id(), movie.getGenres());
+        System.out.println(new Date().toString());
     }
 }
