@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\main",
+    "\\src\\main\\java",
+    "\\src\\main\\java\\ar",
+    "\\src\\main\\java\\ar\\com",
+    "\\src\\main\\java\\ar\\com\\ada",
+    "\\src\\main\\java\\ar\\com\\ada\\api",
+    "\\src\\main\\java\\ar\\com\\ada\\api\\pooflixmongo",
+    "\\src\\main\\java\\ar\\com\\ada\\api\\pooflixmongo\\controllers"
+  ],
+  "SelectedNode": "\\src\\main\\java\\ar\\com\\ada\\api\\pooflixmongo\\controllers\\ActressController.java",
+  "PreviewInSolutionExplorer": false
+}
