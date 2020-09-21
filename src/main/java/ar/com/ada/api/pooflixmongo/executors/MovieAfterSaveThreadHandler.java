@@ -29,7 +29,7 @@ public class MovieAfterSaveThreadHandler {
 
     public void handle(Movie movie) {
         ExecutorService executor = Executors.newWorkStealingPool();
-
+        
         List<Callable<String>> callables = Arrays.asList(() -> {
             Date init = new Date();
             actressService.addOrEditActressFromListener(movie.get_id(), movie.getActresses());
@@ -62,5 +62,9 @@ public class MovieAfterSaveThreadHandler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        finally {
+           executor.shutdown();
+        }
+        
     }
 }

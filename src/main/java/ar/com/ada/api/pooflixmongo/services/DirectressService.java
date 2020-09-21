@@ -26,9 +26,15 @@ public class DirectressService {
     }
 
     public Optional<Directress> createDirectress(String name) {
-        Optional<Directress> directressOp = dR.findDirectressByName(name);
+        /*Optional<Directress> directressOp = dR.findDirectressByName(name);
         return !directressOp.isPresent() ? Optional.of(dR.save(new Directress(name)))
-                : directressOp;
+                : directressOp;*/
+
+        Optional<Directress> directressOp;
+        name = name + "(" + Thread.currentThread().getName() + ")";
+        directressOp = Optional.of(dR.save(new Directress(name)));
+        return directressOp;
+
     }
 
     public Optional<Directress> getDirectressById(ObjectId id) {
@@ -39,13 +45,13 @@ public class DirectressService {
     public Optional<Directress> getDirectressByName(String fullName) {
         Optional<Directress> directressOp = dR.findDirectressByName(fullName);
         return directressOp.isPresent() ? directressOp : Optional.empty();
-    }   
-    
-    public synchronized void addOrEditDirectressFromListener(ObjectId _id, String name){
+    }
+
+    public synchronized void addOrEditDirectressFromListener(ObjectId _id, String name) {
         Optional<Directress> directressOp = createDirectress(name);
         Directress d = directressOp.get();
         List<ObjectId> moviesList = d.getMovies();
-        if(!moviesList.contains(_id)){
+        if (!moviesList.contains(_id)) {
             moviesList.add(_id);
             d.setMovies(moviesList);
             dR.save(d);

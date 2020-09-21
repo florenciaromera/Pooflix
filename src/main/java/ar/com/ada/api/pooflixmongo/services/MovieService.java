@@ -20,9 +20,12 @@ public class MovieService {
     }
 
     public Optional<Movie> createMovie(String title, String releaseDate, boolean awardWinner, List<String> genres, String directress, List<String> actresses) {
-        Optional<Movie> movieOp = mR.findMovieByTitle(title);
-        return movieOp.isEmpty() ? Optional.of(mR.save(new Movie(title, releaseDate, awardWinner, genres, directress, actresses)))
-                : movieOp;
+        Optional<Movie> movieOp; // = mR.findMovieByTitle(title);
+        title = title + "(" + Thread.currentThread().getName() + ")";
+        movieOp = Optional.of(mR.save(new Movie(title, releaseDate, awardWinner, genres, directress, actresses)));
+        return movieOp;
+        /*return movieOp.isEmpty() ? Optional.of(mR.save(new Movie(title, releaseDate, awardWinner, genres, directress, actresses)))
+                : movieOp;*/
     }
 
     public Optional<Movie> getMovieById(ObjectId _id) {

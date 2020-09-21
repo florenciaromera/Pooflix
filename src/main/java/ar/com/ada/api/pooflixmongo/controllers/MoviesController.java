@@ -32,13 +32,29 @@ public class MoviesController {
     @Autowired
     MovieService movieService;
 
-    @PostMapping("/api/movies")
-    public ResponseEntity<?> createMovie(@RequestBody MovieCreationRequestList mCR) {
+    @PostMapping("/api/movies/batchs")
+    public ResponseEntity<?> createMovies(@RequestBody MovieCreationRequestList mCR) {
         System.out.println(new Date().toString());
         for (MovieCreationRequest m : mCR.getM()) {
             movieService.createMovie(m.title, m.releaseDate, m.awardWinner, m.genre, m.director, m.actors);
         }
         return ResponseEntity.ok("ok");
+    }
+
+    @PostMapping("/api/movies")
+    public ResponseEntity<?> createMovie(@RequestBody MovieCreationRequest m) {
+       
+        Optional<Movie> omovie = movieService.createMovie(m.title, m.releaseDate, m.awardWinner, m.genre, m.director, m.actors);
+        
+        omovie.ifPresent(System.out::print);
+        
+        if (omovie.isPresent())
+            System.out.println(omovie.get());
+        
+        if (omovie.isPresent())
+            return ResponseEntity.ok(new GenericResponse(omovie.get().get_id(),"Todo bien",false));
+        else
+            return ResponseEntity.badRequest().body(new GenericResponse(null,"Todo mal",false));
     }
 
     @GetMapping("/api/movies/{id}")

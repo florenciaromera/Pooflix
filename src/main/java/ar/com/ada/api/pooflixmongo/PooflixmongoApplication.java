@@ -24,11 +24,14 @@ public class PooflixmongoApplication {
 	/**
 	 * Agregue esto para que ejecuten eventos en distintos threads y el postman no se me quede colgado 5 horas (gracias stackoverflow)
 	 * @return
+	 * 
 	 */
+	/*
 	@Bean(name = "applicationEventMulticaster")
 	public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
 		SimpleApplicationEventMulticaster eventMulticaster = new SimpleApplicationEventMulticaster();
-		eventMulticaster.setTaskExecutor(new SimpleAsyncTaskExecutor());
+		SimpleAsyncTaskExecutor executor = new SimpleAsyncTaskExecutor();
+		eventMulticaster.setTaskExecutor(executor);
 		return eventMulticaster;
-	}
+	}*/
 }

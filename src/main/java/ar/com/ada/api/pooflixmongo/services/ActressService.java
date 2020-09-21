@@ -20,14 +20,18 @@ public class ActressService {
     @Autowired
     ActressMoviesBuilder actressMoviesBuilder;
 
+    private Integer recurso = 0;
+
     public Optional<Actress> actressExistsById(ObjectId _id) {
         return Optional.of(aR.findBy_id(_id));
     }
 
     public Optional<Actress> createActress(String name, Date birthDate, String nationality) {
-        Optional<Actress> actressOp = aR.findActressByName(name);
-        return !actressOp.isPresent() ? Optional.of(aR.save(new Actress(name, birthDate, nationality)))
-                : actressOp;
+        Optional<Actress> actressOp; // = aR.findActressByName(name);
+        //Optional<Movie> movieOp; // = mR.findMovieByTitle(title);
+        name = name + "(" + Thread.currentThread().getName() + ")";
+        actressOp = Optional.of(aR.save(new Actress(name, birthDate, nationality)));
+        return actressOp;
     }
 
     public Optional<Actress> createActress(String name) {
@@ -48,7 +52,7 @@ public class ActressService {
 
     public void addOrEditActressFromListener(ObjectId _id, List<String> names){
         List<Optional<Actress>> opList = new ArrayList<>();
-        synchronized (this) {
+        synchronized (this.recurso) {
             opList = names.stream().map(s -> createActress(s)).collect(Collectors.toList());
         }
         List<Actress> actressList = new ArrayList<>();
