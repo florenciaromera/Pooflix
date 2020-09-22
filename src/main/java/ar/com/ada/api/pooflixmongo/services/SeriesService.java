@@ -23,7 +23,6 @@ public class SeriesService {
     @Autowired
     SeriesRepo seriesRepo;
 
-    // accede directo a mongodb
     @Autowired
     MongoTemplate mongoTemplate;
 

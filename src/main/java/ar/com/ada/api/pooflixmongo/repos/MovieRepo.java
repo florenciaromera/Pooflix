@@ -16,6 +16,6 @@ public interface MovieRepo extends MongoRepository<Movie, ObjectId> {
     @Query("{ 'title' : ?0 }")
     Optional<Movie> findMovieByTitle(String title);
 
-    @Query(value = "{ 'actress._id' : ?0 }", fields = "{'_id' : 1, 'title': 1, 'actress' : 1 }")
-    List<Movie> findMoviesByActress_id(ObjectId _id);
+    // @Query(value = "{ 'actress._id' : ?0 }", fields = "{'_id' : 1, 'title': 1, 'actress' : 1 }")
+    // List<Movie> findMoviesByActress_id(ObjectId _id);
 }

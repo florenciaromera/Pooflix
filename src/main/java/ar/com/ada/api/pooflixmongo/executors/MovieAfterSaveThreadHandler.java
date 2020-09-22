@@ -62,5 +62,9 @@ public class MovieAfterSaveThreadHandler {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        finally{
+            executor.shutdown();
+        }
     }
 }

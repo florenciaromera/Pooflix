@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Avoid password push
-!**/src/main/resources/application.properties
+.application.properties

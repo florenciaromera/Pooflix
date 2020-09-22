@@ -15,6 +15,8 @@ public class GenreService {
     @Autowired
     GenreRepo gR;
 
+    private Integer recurso = 0;
+
     public Optional<Genre> genreExistsById(ObjectId _id) {
         return Optional.of(gR.findBy_id(_id));
     }
@@ -41,7 +43,7 @@ public class GenreService {
 
     public void addOrEditGenreFromListener(ObjectId _id, List<String> genres) {
         List<Optional<Genre>> opList = new ArrayList<>();
-        synchronized (this) {
+        synchronized (this.recurso) {
             opList = genres.stream().map(s -> createGenre(s)).collect(Collectors.toList());
         }
         List<Genre> genresList = new ArrayList<>();

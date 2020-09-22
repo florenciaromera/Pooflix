@@ -23,7 +23,7 @@ public class SeriesController {
     @Autowired
     SeriesService seriesService;
 
-    @PostMapping("/api/series")
+    @PostMapping("/api/series/batches")
     public ResponseEntity<?> createSeries(@RequestBody SeriesCreationRequestList seriesCreationRequestList) {
         for (SeriesCreationRequest s : seriesCreationRequestList.getSeriesCreationRequest()) {
             seriesService.createSeries(s.title, s.releaseDate, s.awardWinner, s.genre);
@@ -45,5 +45,4 @@ public class SeriesController {
         seriesService.getEpisode(id, seasonNumber, episodeNumber);
         return ResponseEntity.ok(new EpisodeResponse());
     }
-
 }

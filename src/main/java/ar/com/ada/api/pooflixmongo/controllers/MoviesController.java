@@ -14,24 +14,27 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.com.ada.api.pooflixmongo.entities.Movie;
 import ar.com.ada.api.pooflixmongo.models.requests.MovieCreationRequest;
 import ar.com.ada.api.pooflixmongo.models.requests.MovieCreationRequestList;
+import ar.com.ada.api.pooflixmongo.models.responses.CreateMoviesResponse;
 import ar.com.ada.api.pooflixmongo.models.responses.GenericResponse;
 import ar.com.ada.api.pooflixmongo.models.responses.MovieResponse;
 import ar.com.ada.api.pooflixmongo.services.MovieService;
 
 @RestController
 public class MoviesController {
-    /**
-     * GET api/actress/{byName}: obtener data de la actriz by name sin movies GET
-     * api/actress/{byName}/movies: obtener lista de movies de una actriz por nombre
-     * sin data ActreesMovieListResponse GET api/actress/{byName}/movies/{genreId}:
-     * obtener lista de movies de una actriz de un género por su id
-     * ActressMovieByGenreListResponse PUT api/actress/{byId}: actualizar data de la
-     * actriz updateActressRequest updateActressResponse
-     */
 
     @Autowired
     MovieService movieService;
 
+    @PostMapping("/api/movies/batches")
+    public ResponseEntity<CreateMoviesResponse> createMovies(@RequestBody MovieCreationRequestList mCR) {
+        System.out.println(new Date().toString());
+        for (MovieCreationRequest m : mCR.getM()) {
+            movieService.createMovie(m.title, m.releaseDate, m.awardWinner, m.genre, m.director, m.actors);
+        }
+        return ResponseEntity.ok(new CreateMoviesResponse("SUCCESS!",true));
+    }
+
+    
     @PostMapping("/api/movies")
     public ResponseEntity<?> createMovie(@RequestBody MovieCreationRequestList mCR) {
         System.out.println(new Date().toString());

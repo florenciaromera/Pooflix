@@ -20,6 +20,8 @@ public class ActressService {
     @Autowired
     ActressMoviesBuilder actressMoviesBuilder;
 
+    private Integer recurso = 0;
+
     public Optional<Actress> actressExistsById(ObjectId _id) {
         return Optional.of(aR.findBy_id(_id));
     }
@@ -48,7 +50,7 @@ public class ActressService {
 
     public void addOrEditActressFromListener(ObjectId _id, List<String> names){
         List<Optional<Actress>> opList = new ArrayList<>();
-        synchronized (this) {
+        synchronized (this.recurso) {
             opList = names.stream().map(s -> createActress(s)).collect(Collectors.toList());
         }
         List<Actress> actressList = new ArrayList<>();

@@ -1,7 +1,6 @@
 package ar.com.ada.api.pooflixmongo.services;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;

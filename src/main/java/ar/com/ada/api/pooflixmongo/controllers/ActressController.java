@@ -41,13 +41,13 @@ public class ActressController {
                 : ResponseEntity.badRequest().build();
     }
 
-    // @GetMapping("/api/actresses/{id}")
-    // public ResponseEntity<ActressResponse> getActressById(@PathVariable ObjectId id) {
-    //     Optional<Actress> actressOp = aS.getActressById(id);
-    //     return actressOp.isPresent() ? ResponseEntity.ok(new ActressResponse(actressOp.get().getName(),
-    //             actressOp.get().getBirthDate(), actressOp.get().getNationality()))
-    //             : ResponseEntity.badRequest().build();
-    // }
+    @GetMapping("/api/actresses/{id}")
+    public ResponseEntity<ActressResponse> getActressById(@PathVariable ObjectId id) {
+        Optional<Actress> actressOp = actressService.getActressById(id);
+        return actressOp.isPresent() ? ResponseEntity.ok(new ActressResponse(actressOp.get().getName(),
+                actressOp.get().getBirthDate(), actressOp.get().getNationality()))
+                : ResponseEntity.badRequest().build();
+    }
 
     @GetMapping("/api/actresses/{fullName}/movies")
     public ResponseEntity<ActressMoviesListResponse> getActressMovieListByName(@PathVariable String fullName) {

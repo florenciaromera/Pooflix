@@ -19,15 +19,7 @@ import ar.com.ada.api.pooflixmongo.services.GenreService;
 
 @RestController
 public class GenreController {
-    /**
-     * GET api/actress/{byName}: obtener data de la actriz by name sin Genre GET
-     * api/actress/{byName}/Genre: obtener lista de Genre de una actriz por nombre
-     * sin data ActreesGenreistResponse GET api/actress/{byName}/Genre/{genreId}:
-     * obtener lista de Genre de una actriz de un género por su id
-     * ActressGenreyGenreListResponse PUT api/actress/{byId}: actualizar data de la
-     * actriz updateActressRequest updateActressResponse
-     */
-
+   
     @Autowired
     GenreService genreService;
 
